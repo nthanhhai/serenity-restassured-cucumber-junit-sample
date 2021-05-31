@@ -46,3 +46,9 @@ In that archive, please look for
 `serenity-summary.html`
 
 report for the Summary of Execution.
+
+## Future development
+
+- Use RequestSpecification and ResponseSpecification to validate request and response.
+- Configuration for test to run on different environment, e.g. SIT, UAT, and Production
+- Read Test Data from external resource.

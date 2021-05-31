@@ -1,6 +1,5 @@
 package StepDefinitions;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
@@ -9,31 +8,33 @@ import io.weatherbit.v2.common.CommonData;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 public class GetCurrentWeatherDataSteps {
 
     public Response response;
 
     @Given("I send a get weather data request to weatherbit with lat {double} and lon {double}")
-    public void sendRequestWithLatLon(Double lat, Double lon) throws IOException {
+    public void sendRequestWeatherDataWithLatLon(Double lat, Double lon) throws IOException {
         response = SerenityRest.given()
-                .contentType("application/json")
-                .header("Content-Type", "application/json")
+                .baseUri(CommonData.URL)
+                .basePath("/current")
                 .param("lat", lat)
                 .param("lon", lon)
                 .param("key", CommonData.APIKey)
-                .when().get(CommonData.URL);
+                .when().get();
+
+        System.out.println(response.toString());
     }
 
     @Given("I send a get weather data request to weatherbit with a list of city as {string}")
-    public void sendRequestWithCities(String cities) throws IOException {
+    public void sendRequestWeatherDataWithCities(String cities) throws IOException {
         response = SerenityRest.given()
-                .contentType("application/json")
-                .header("Content-Type", "application/json")
+                .baseUri(CommonData.URL)
+                .basePath("/current")
                 .param("cities", cities)
                 .param("key", CommonData.APIKey)
-                .when().get(CommonData.URL);
+                .when().get();
+        System.out.println(response.toString());
     }
 
     @Then("the API should return status {int}")
@@ -43,20 +44,19 @@ public class GetCurrentWeatherDataSteps {
 
     @Then("Response should contain city name {string}")
     public void verifyResponseContentCity(String cityName) {
-        String outCityName = response.jsonPath().getString("data.city_name");
-        System.out.println("City Name is " + outCityName);
+        String outCityName = response.jsonPath().getString("data[0].city_name");
         assertEquals(cityName, outCityName);
     }
 
-    @Then("Response should contain lat {double}")
-    public void verifyResponseContentLat(Double lat) {
-        String outLat = response.jsonPath().getString("data.lat");
+    @Then("Response should contain lat {string}")
+    public void verifyResponseContentLat(String lat) {
+        String outLat = response.jsonPath().getString("data[0].lat");
         assertEquals(lat, outLat);
     }
 
-    @Then("Response should contain lon {double}")
-    public void verifyResponseContentLon(Double lon) {
-        String outLon = response.jsonPath().getString("data.lon");
+    @Then("Response should contain lon {string}")
+    public void verifyResponseContentLon(String lon) {
+        String outLon = response.jsonPath().getString("data[0].lon");
         assertEquals(lon, outLon);
     }
 }

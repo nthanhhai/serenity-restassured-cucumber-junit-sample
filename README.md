@@ -9,6 +9,7 @@ This framework is developed as an example of API Automated Testing solution. The
 
 The idea behind the framework is as following
 
+![Automation Framework Mind map](/data/API Testing Automation Framework.png)
 
 ## Cucumber integration
 

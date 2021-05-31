@@ -1,6 +1,5 @@
 package StepDefinitions;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
@@ -10,20 +9,19 @@ import io.weatherbit.v2.common.CommonData;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 public class GetCurrentAirQualitySteps {
 
     public Response response;
 
     @Given("I send a get air quality request to weatherbit for post code {int}")
-    public void sendRequestWithPostCode(int postCode) throws IOException {
+    public void sendRequestAirQualityWithPostCode(int postCode) throws IOException {
         response = SerenityRest.given()
-                .contentType("application/json")
-                .header("Content-Type", "application/json")
+                .baseUri(CommonData.URL)
+                .basePath("/current/airquality")
                 .param("postal_code", postCode)
                 .param("key", CommonData.APIKey)
-                .when().get(CommonData.URL);
+                .when().get();
     }
 
     @Then("Response should contain State code {string}")

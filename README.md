@@ -6,6 +6,7 @@ This framework is developed as an example of API Automated Testing solution. The
 - SerenityBDD
 - Rest-Assured
 - Cucumber
+- Maven
 
 The idea behind the framework is as following
 
@@ -36,5 +37,12 @@ Once clone the repository to local environment, use this following command to ex
 
 `mvn clean verify`
 
+## Test Report
 Sample test repot can be found at 
 `data/sample_report/TestResults.zip`
+
+In that archive, please look for 
+
+`serenity-summary.html`
+
+report for the Summary of Execution.
